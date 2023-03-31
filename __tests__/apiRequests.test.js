@@ -2,6 +2,7 @@ const {
   requestChickenMeals,
   requestPorkMeals,
   requestBeefMeals,
+  requestLambMeals,
 } = require("../apiRequests");
 
 describe("requestChickenMeals", () => {
@@ -43,5 +44,19 @@ describe("requestBeefMeals", () => {
     expect(beefMeals[0]).toHaveProperty("image");
     expect(beefMeals[0]).toHaveProperty("youtube");
     expect(beefMeals[0]).toHaveProperty("ingredients");
+  });
+});
+
+describe("requestLambMeals", () => {
+  test("should return an array of lamb meal objects", async () => {
+    const lambMeals = await requestLambMeals();
+    expect(Array.isArray(lambMeals)).toBe(true);
+    expect(lambMeals[0]).toHaveProperty("id");
+    expect(lambMeals[0]).toHaveProperty("title");
+    expect(lambMeals[0]).toHaveProperty("category");
+    expect(lambMeals[0]).toHaveProperty("instructions");
+    expect(lambMeals[0]).toHaveProperty("image");
+    expect(lambMeals[0]).toHaveProperty("youtube");
+    expect(lambMeals[0]).toHaveProperty("ingredients");
   });
 });

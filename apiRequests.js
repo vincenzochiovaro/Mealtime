@@ -99,4 +99,42 @@ const requestBeefMeals = async () => {
   }
 };
 
-module.exports = { requestChickenMeals, requestPorkMeals, requestBeefMeals };
+const requestLambMeals = async () => {
+  try {
+    const response = await axios.get(
+      "https://www.themealdb.com/api/json/v1/1/search.php?s=Lamb"
+    );
+
+    const lambMealDetails = response.data.meals.map((meal) => {
+      const ingredientsList = [];
+      for (let i = 1; i <= 20; i++) {
+        const ingredient = meal[`strIngredient${i}`];
+        const measurement = meal[`strMeasure${i}`];
+        if (ingredient && measurement) {
+          ingredientsList.push({ ingredient, measurement });
+        }
+      }
+
+      const lambRecipeObj = {
+        id: meal.idMeal,
+        title: meal.strMeal,
+        category: meal.strCategory,
+        instructions: meal.strInstructions,
+        image: meal.strMealThumb,
+        youtube: meal.strYoutube,
+        ingredients: ingredientsList,
+      };
+      return lambRecipeObj;
+    });
+    return lambMealDetails;
+  } catch (err) {
+    console.log(err, "ERROR");
+  }
+};
+
+module.exports = {
+  requestChickenMeals,
+  requestPorkMeals,
+  requestBeefMeals,
+  requestLambMeals,
+};

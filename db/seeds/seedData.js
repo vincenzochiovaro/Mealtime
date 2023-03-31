@@ -38,7 +38,7 @@ const createPorkMealsTable = async () => {
             `);
     console.log("porkMeals table created successfully.");
   } catch (err) {
-    console.log("Error creating chickenMeals table");
+    console.log("Error creating porkMeals table");
   }
 };
 
@@ -59,7 +59,27 @@ const createBeefMealsTable = async () => {
               `);
     console.log("beefMeals table created successfully.");
   } catch (err) {
-    console.log("Error creating chickenMeals table");
+    console.log("Error creating beefMeals table");
+  }
+};
+const createLambMealsTable = async () => {
+  try {
+    await db.query(`DROP TABLE IF EXISTS lambMeals`);
+
+    await db.query(`
+                  CREATE TABLE lambMeals (
+                    id SERIAL PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    category VARCHAR(255) NOT NULL,
+                    instructions TEXT NOT NULL,
+                    image VARCHAR(255) NOT NULL,
+                    youtube VARCHAR(255),
+                    ingredients JSONB NOT NULL
+                  )
+                `);
+    console.log("lambMeals table created successfully.");
+  } catch (err) {
+    console.log("Error creating lambMeals table");
   }
 };
 
@@ -68,7 +88,7 @@ const seed = async () => {
     await createChickenMealsTable();
     await createPorkMealsTable();
     await createBeefMealsTable();
-    //   await createLambMealsTable();
+    await createLambMealsTable();
   } catch (err) {
     console.log("Error seeding database:", err);
   }
