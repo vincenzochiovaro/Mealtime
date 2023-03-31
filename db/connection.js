@@ -1,6 +1,8 @@
 const { Client } = require("pg");
 
-const client = new Client();
+const client = new Client({
+  database: "mealdatabase",
+});
 
 require("dotenv").config({
   path: `${__dirname}/../.env-mealconnection`,
