@@ -25,6 +25,7 @@ const requestChickenMeals = async () => {
         youtube: meal.strYoutube,
         ingredients: ingredientsList,
       };
+
       return chickenRecipeObj;
     });
     return chickenMealDetails;
@@ -32,6 +33,8 @@ const requestChickenMeals = async () => {
     console.log(err, "ERROR");
   }
 };
+
+requestChickenMeals();
 
 const requestPorkMeals = async () => {
   try {
