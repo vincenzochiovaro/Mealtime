@@ -91,6 +91,22 @@ const createLambMealsTable = async () => {
   }
 };
 
+const createCategoriesTable = async () => {
+  try {
+    await db.query(`DROP TABLE IF EXISTS categories`);
+
+    await db.query(`
+                  CREATE TABLE categories (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL
+                  )
+                `);
+    console.log("categories table created successfully.");
+  } catch (err) {
+    console.log("Error creating categories table");
+  }
+};
+
 const insertChickenMealsData = async () => {
   try {
     const chickenMealData = await requestChickenMeals();
@@ -199,16 +215,30 @@ const insertLambMealsData = async () => {
   }
 };
 
+const insertCategoriesData = async () => {
+  try {
+    await db.query(`
+    INSERT INTO categories(name)
+    VALUES ('Chicken'),('Beef'),('Pork'),('Lamb')
+    `);
+    console.log("inserted data into categories table successfully");
+  } catch (err) {
+    console.error("Error inserting categories  data:", err);
+  }
+};
+
 const seed = async () => {
   try {
     await createChickenMealsTable();
     await createPorkMealsTable();
     await createBeefMealsTable();
     await createLambMealsTable();
+    await createCategoriesTable();
     await insertChickenMealsData();
     await insertPorkMealsData();
     await insertBeefMealsData();
     await insertLambMealsData();
+    await insertCategoriesData();
   } catch (err) {
     console.log("Error seeding database:");
   }
