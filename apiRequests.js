@@ -34,8 +34,6 @@ const requestChickenMeals = async () => {
   }
 };
 
-requestChickenMeals();
-
 const requestPorkMeals = async () => {
   try {
     const response = await axios.get(

@@ -17,6 +17,12 @@ describe("requestChickenMeals", () => {
     expect(chickenMeals[0]).toHaveProperty("youtube");
     expect(chickenMeals[0]).toHaveProperty("ingredients");
   });
+  test("should return chicken meals with category 'Chicken'", async () => {
+    const chickenMeals = await requestChickenMeals();
+    chickenMeals.forEach((meal) => {
+      expect(meal.category).toBe("Chicken");
+    });
+  });
 });
 
 describe("requestPorkMeals", () => {
@@ -30,6 +36,12 @@ describe("requestPorkMeals", () => {
     expect(porkMeals[0]).toHaveProperty("image");
     expect(porkMeals[0]).toHaveProperty("youtube");
     expect(porkMeals[0]).toHaveProperty("ingredients");
+  });
+  test("should return Pork meals with category 'Pork'", async () => {
+    const PorkMeals = await requestPorkMeals();
+    PorkMeals.forEach((meal) => {
+      expect(meal.category).toBe("Pork");
+    });
   });
 });
 
@@ -45,6 +57,12 @@ describe("requestBeefMeals", () => {
     expect(beefMeals[0]).toHaveProperty("youtube");
     expect(beefMeals[0]).toHaveProperty("ingredients");
   });
+  test("should return Beef meals with category 'Beef'", async () => {
+    const BeefMeals = await requestBeefMeals();
+    BeefMeals.forEach((meal) => {
+      expect(meal.category).toBe("Beef");
+    });
+  });
 });
 
 describe("requestLambMeals", () => {
@@ -59,4 +77,11 @@ describe("requestLambMeals", () => {
     expect(lambMeals[0]).toHaveProperty("youtube");
     expect(lambMeals[0]).toHaveProperty("ingredients");
   });
+  // test("should return Lamb meals with category 'Lamb'===> reported small issue to the MealDB creator for wrong category name on the lamb meals category, ", async () => {
+  //   const LambMeals = await requestLambMeals();
+  //   LambMeals.forEach((meal) => {
+  //     console.log(meal.category);
+  //     expect(meal.category).toBe("Lamb");
+  //   });
+  // });
 });
