@@ -10,10 +10,6 @@ The Simplified MealDB API is built using Node.js, Express, and PostgreSQL. It re
 
 This section will be updated as soon as the endpoints have been created.
 
-# Contact
-
-If you have any questions or suggestions regarding the Simplified MealDB API, please feel free to contact us at vincenzochiovaro194@gmail.com. I would love to hear your feedback and help you with any issues you may encounter.
-
 # Acknowledgements
 
 I would like to thank the MealDB team for providing a wonderful API and allowing me to use their database in this project.
