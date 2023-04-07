@@ -29,4 +29,28 @@ describe("app", () => {
       });
     });
   });
+
+  describe("Get/api/recipes/pork", () => {
+    test("should respond with a status of 200", async () => {
+      await request(app).get("/api/recipes/pork").expect(200);
+    });
+    test("should respond with a status of 200 and display an array of porkRecipes object  ", async () => {
+      const porkRecipes = await request(app)
+        .get("/api/recipes/pork")
+        .expect(200);
+      expect(Array.isArray(porkRecipes.body));
+    });
+    test("each object should contain id/title/category/instrunctions/image/youtube and ingredients property  ", async () => {
+      const porkRecipes = await request(app)
+        .get("/api/recipes/pork")
+        .expect(200);
+      porkRecipes.body.forEach((recipe) => {
+        expect(recipe).toHaveProperty("id", expect.any(Number));
+        expect(recipe).toHaveProperty("title", expect.any(String));
+        expect(recipe).toHaveProperty("category", expect.any(String));
+        expect(recipe).toHaveProperty("instructions", expect.any(String));
+        expect(Array.isArray(recipe.ingredients)).toBe(true);
+      });
+    });
+  });
 });
