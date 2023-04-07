@@ -25,7 +25,7 @@ describe("app", () => {
       const categories = await request(app).get("/api/categories").expect(200);
       categories.body.forEach((category) => {
         expect(category).toHaveProperty("id", expect.any(Number));
-        expect(category).toHaveProperty("name", expect.any(String));
+        expect(category).toHaveProperty("category_name", expect.any(String));
       });
     });
   });
