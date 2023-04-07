@@ -98,7 +98,7 @@ const createCategoriesTable = async () => {
     await db.query(`
                   CREATE TABLE categories (
                     id SERIAL PRIMARY KEY,
-                    name VARCHAR(255) NOT NULL
+                    category_name VARCHAR(255) NOT NULL
                   )
                 `);
     console.log("categories table created successfully.");
@@ -218,7 +218,7 @@ const insertLambMealsData = async () => {
 const insertCategoriesData = async () => {
   try {
     await db.query(`
-    INSERT INTO categories(name)
+    INSERT INTO categories(category_name)
     VALUES ('Chicken'),('Beef'),('Pork'),('Lamb')
     `);
     console.log("inserted data into categories table successfully");
