@@ -30,9 +30,12 @@ describe("app", () => {
     });
   });
 
-  describe("Get/api/recipes/pork", () => {
+  describe("Get/api/recipes/:category", () => {
     test("should respond with a status of 200", async () => {
       await request(app).get("/api/recipes/pork").expect(200);
+      await request(app).get("/api/recipes/beef").expect(200);
+      await request(app).get("/api/recipes/chicken").expect(200);
+      await request(app).get("/api/recipes/lamb").expect(200);
     });
     test("should respond with a status of 200 and display an array of porkRecipes object  ", async () => {
       const porkRecipes = await request(app)
