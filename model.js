@@ -12,15 +12,15 @@ const displayCategories = async () => {
   }
 };
 
-const displayPorkRecipes = async () => {
+const displayRecipesByCategory = async (category) => {
   try {
-    return await db.query(`SELECT * FROM porkMeals;`);
+    return await db.query(`SELECT * FROM ${category}Meals;`);
   } catch (err) {
     return Promise.reject({
       code: err.code,
-      msg: "Error occurred while fetching porkMeals",
+      msg: `Error occurred while fetching ${category}Meals`,
     });
   }
 };
 
-module.exports = { displayCategories, displayPorkRecipes };
+module.exports = { displayCategories, displayRecipesByCategory };
