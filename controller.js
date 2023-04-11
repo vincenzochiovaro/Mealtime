@@ -1,4 +1,4 @@
-const { displayCategories, displayPorkRecipes } = require("./model");
+const { displayCategories, displayRecipesByCategory } = require("./model");
 
 const getCategories = async (request, response, next) => {
   try {
@@ -9,13 +9,14 @@ const getCategories = async (request, response, next) => {
   }
 };
 
-const getPorkRecipes = async (request, response, next) => {
+const getRecipesByCategory = async (request, response, next) => {
   try {
-    const porkRecipesObj = await displayPorkRecipes();
-    response.status(200).send(porkRecipesObj.rows);
+    const { category } = request.params;
+    const recipesObj = await displayRecipesByCategory(category);
+    response.status(200).send(recipesObj.rows);
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { getCategories, getPorkRecipes };
+module.exports = { getCategories, getRecipesByCategory };

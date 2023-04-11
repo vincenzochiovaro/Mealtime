@@ -1,10 +1,10 @@
-const { getCategories, getPorkRecipes } = require("./controller");
+const { getCategories, getRecipesByCategory } = require("./controller");
 
 const express = require("express");
 const app = express();
 
 app.get("/api/categories", getCategories);
-app.get("/api/recipes/pork", getPorkRecipes);
+app.get("/api/recipes/:category", getRecipesByCategory);
 
 // PSQL ERROR HANDLER
 app.use((err, request, response, next) => {
