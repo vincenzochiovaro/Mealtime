@@ -55,6 +55,11 @@ describe("app", () => {
         expect(Array.isArray(recipe.ingredients)).toBe(true);
       });
     });
+    describe("Get/api/recipes/:category Error handling test ", () => {
+      test("should return status 404 when given category doesn't exists ", () => {
+        return request(app).get("/api/recipes/invalid").expect(404);
+      });
+    });
   });
 
   describe("Get/api/recipe/random", () => {

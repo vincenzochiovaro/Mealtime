@@ -11,10 +11,18 @@ app.get("/api/categories", getCategories);
 app.get("/api/recipes/:category", getRecipesByCategory);
 app.get("/api/recipe/random", getRandomRecipe);
 
+//CUSTOM ERROR HANDLER
+app.use((err, request, response, next) => {
+  if (err.status === 404) {
+    response.status(err.status).send({ "Not Found": "Category not found" });
+  } else {
+    next(err);
+  }
+});
+
 // PSQL ERROR HANDLER
 app.use((err, request, response, next) => {
-  console.log("psql error");
-  if (err.code === "22P02" || err.code === "42P01") {
+  if (err.code === "22P02") {
     response.status(400).send(err.msg);
   } else {
     next(err);
@@ -23,7 +31,7 @@ app.use((err, request, response, next) => {
 
 // INTERNAL SERVER ERROR
 app.use((err, request, response, next) => {
-  console.log("internal server error");
   response.status(500).send(err.msg);
 });
+
 module.exports = app;
