@@ -17,8 +17,9 @@ const displayRecipesByCategory = async (category) => {
     return await db.query(`SELECT * FROM ${category}Meals;`);
   } catch (err) {
     return Promise.reject({
+      status: 404,
       code: err.code,
-      msg: `Error occurred while fetching ${category}Meals`,
+      msg: "Error occurred while fetching recipeMeals",
     });
   }
 };
