@@ -56,4 +56,22 @@ describe("app", () => {
       });
     });
   });
+
+  describe("Get/api/recipe/random", () => {
+    test("should respond with a status of 200", async () => {
+      await request(app).get("/api/recipe/random").expect(200);
+    });
+    test("should respond with a random recipe object ", async () => {
+      const randomRecipe = await request(app)
+        .get("/api/recipe/random")
+        .expect(200);
+      randomRecipe.body.forEach((randomRecipe) => {
+        expect(randomRecipe).toHaveProperty("id", expect.any(Number));
+        expect(randomRecipe).toHaveProperty("title", expect.any(String));
+        expect(randomRecipe).toHaveProperty("category", expect.any(String));
+        expect(randomRecipe).toHaveProperty("instructions", expect.any(String));
+        expect(Array.isArray(randomRecipe.ingredients)).toBe(true);
+      });
+    });
+  });
 });

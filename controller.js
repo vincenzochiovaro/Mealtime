@@ -1,4 +1,8 @@
-const { displayCategories, displayRecipesByCategory } = require("./model");
+const {
+  displayCategories,
+  displayRecipesByCategory,
+  displayRandomRecipe,
+} = require("./model");
 
 const getCategories = async (request, response, next) => {
   try {
@@ -19,4 +23,18 @@ const getRecipesByCategory = async (request, response, next) => {
   }
 };
 
-module.exports = { getCategories, getRecipesByCategory };
+const getRandomRecipe = async (request, response, next) => {
+  try {
+    const randomRecipeObj = await displayRandomRecipe();
+    response.status(200).send(randomRecipeObj.rows);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getCategories,
+  getRecipesByCategory,
+  getRecipesByCategory,
+  getRandomRecipe,
+};
