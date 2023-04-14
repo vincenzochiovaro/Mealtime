@@ -2,14 +2,17 @@ const {
   getCategories,
   getRecipesByCategory,
   getRandomRecipe,
+  postRecipe,
 } = require("./controller");
 
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 app.get("/api/categories", getCategories);
 app.get("/api/recipes/:category", getRecipesByCategory);
 app.get("/api/recipe/random", getRandomRecipe);
+app.post("/api/recipe", postRecipe);
 
 //CUSTOM ERROR HANDLER
 app.use((err, request, response, next) => {
@@ -22,8 +25,14 @@ app.use((err, request, response, next) => {
 
 // PSQL ERROR HANDLER
 app.use((err, request, response, next) => {
-  if (err.code === "22P02") {
+  if (err.code === "22P02" || err.code === "42601") {
     response.status(400).send(err.msg);
+  } else if (err.code === "23502") {
+    response
+      .status(400)
+      .send(
+        "One or more required property fields are missing or incorrect, make sure to have each property followed from the correct value"
+      );
   } else {
     next(err);
   }

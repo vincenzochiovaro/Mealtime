@@ -2,6 +2,7 @@ const {
   displayCategories,
   displayRecipesByCategory,
   displayRandomRecipe,
+  insertRecipe,
 } = require("./model");
 
 const getCategories = async (request, response, next) => {
@@ -32,9 +33,30 @@ const getRandomRecipe = async (request, response, next) => {
   }
 };
 
+const postRecipe = async (request, response, next) => {
+  try {
+    const { title, category, instructions, image, youtube, ingredients } =
+      request.body;
+
+    const recipeToInsert = await insertRecipe(
+      title,
+      category,
+      instructions,
+      image,
+      youtube,
+      ingredients
+    );
+
+    response.status(201).send(recipeToInsert);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getCategories,
   getRecipesByCategory,
   getRecipesByCategory,
   getRandomRecipe,
+  postRecipe,
 };
