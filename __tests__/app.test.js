@@ -12,7 +12,7 @@ afterAll(() => {
 });
 
 describe("app", () => {
-  describe("Get/api/categories", () => {
+  describe("GET /api/categories", () => {
     test("should respond with a status of 200 ", async () => {
       await request(app).get("/api/categories").expect(200);
     });
@@ -30,7 +30,7 @@ describe("app", () => {
     });
   });
 
-  describe("Get/api/recipes/:category", () => {
+  describe("GET /api/recipes/:category", () => {
     test("should respond with a status of 200", async () => {
       await request(app).get("/api/recipes/pork").expect(200);
       await request(app).get("/api/recipes/beef").expect(200);
@@ -62,7 +62,7 @@ describe("app", () => {
     });
   });
 
-  describe("Get/api/recipe/random", () => {
+  describe("GET /api/recipe/random", () => {
     test("should respond with a status of 200", async () => {
       await request(app).get("/api/recipe/random").expect(200);
     });
@@ -76,6 +76,70 @@ describe("app", () => {
         expect(randomRecipe).toHaveProperty("category", expect.any(String));
         expect(randomRecipe).toHaveProperty("instructions", expect.any(String));
         expect(Array.isArray(randomRecipe.ingredients)).toBe(true);
+      });
+    });
+  });
+
+  describe("POST /api/recipe", () => {
+    test("respond with 201 when a valid recipe is posted ", async () => {
+      const recipeData = {
+        title: "test Recipe",
+        category: "chicken",
+        instructions: "test instructions",
+        image: "example.jpg",
+        youtube: "https://www.youtube.com/test",
+        ingredients: [
+          { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+          { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+        ],
+      };
+      await request(app).post("/api/recipe").send(recipeData).expect(201);
+    });
+    test("respond with the recipe added successfully  ", async () => {
+      const recipeData = {
+        title: "test Recipe",
+        category: "chicken",
+        instructions: "test instructions",
+        image: "example.jpg",
+        youtube: "https://www.youtube.com/test",
+        ingredients: [
+          { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+          { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+        ],
+      };
+      const addedRecipe = await request(app)
+        .post("/api/recipe")
+        .send(recipeData)
+        .expect(201);
+
+      addedRecipe.body.forEach((recipe) => {
+        expect(recipe).toHaveProperty("id", expect.any(Number));
+        expect(recipe).toHaveProperty("title", expect.any(String));
+        expect(recipe).toHaveProperty("category", expect.any(String));
+        expect(recipe).toHaveProperty("instructions", expect.any(String));
+        expect(recipe).toHaveProperty("image", expect.any(String));
+        expect(recipe).toHaveProperty("youtube", expect.any(String));
+        expect(Array.isArray(recipe.ingredients)).toBe(true);
+      });
+    });
+
+    describe("POST /api/recipe Error handling", () => {
+      test("respond with status 400 when one or more property field are incorrect  ", async () => {
+        const wrongRecipeData = {
+          wrong: "test Recipe",
+          category: "chicken",
+          wrong2: "test instructions",
+          image: "example.jpg",
+          youtube: "https://www.youtube.com/test",
+          ingredients: [
+            { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+            { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+          ],
+        };
+        await request(app)
+          .post("/api/recipe")
+          .send(wrongRecipeData)
+          .expect(400);
       });
     });
   });
