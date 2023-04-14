@@ -4,15 +4,17 @@ const {
   getRandomRecipe,
   postRecipe,
 } = require("./controller");
+require("./envRateLimiter");
 
 const express = require("express");
 const app = express();
+const limiter = require("./rateLimit");
 app.use(express.json());
 
 app.get("/api/categories", getCategories);
 app.get("/api/recipes/:category", getRecipesByCategory);
 app.get("/api/recipe/random", getRandomRecipe);
-app.post("/api/recipe", postRecipe);
+app.post("/api/recipe", limiter, postRecipe);
 
 //CUSTOM ERROR HANDLER
 app.use((err, request, response, next) => {
