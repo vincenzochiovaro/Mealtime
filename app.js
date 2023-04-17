@@ -1,20 +1,16 @@
-const {
-  getCategories,
-  getRecipesByCategory,
-  getRandomRecipe,
-  postRecipe,
-} = require("./controller");
-require("./envRateLimiter");
-
 const express = require("express");
 const app = express();
-const limiter = require("./rateLimit");
+
 app.use(express.json());
 
-app.get("/api/categories", getCategories);
-app.get("/api/recipes/:category", getRecipesByCategory);
-app.get("/api/recipe/random", getRandomRecipe);
-app.post("/api/recipe", limiter, postRecipe);
+//routes
+const categoriesRouter = require("./routes/categoriesRoutes");
+const recipesRouter = require("./routes/recipesRoutes");
+const recipeRouter = require("./routes/recipeRoutes");
+
+app.use("/api/categories", categoriesRouter);
+app.use("/api/recipes", recipesRouter);
+app.use("/api/recipe", recipeRouter);
 
 //CUSTOM ERROR HANDLER
 app.use((err, request, response, next) => {
