@@ -14,8 +14,8 @@ app.use("/api/recipe", recipeRouter);
 
 //CUSTOM ERROR HANDLER
 app.use((err, request, response, next) => {
-  if (err.status === 404) {
-    response.status(err.status).send({ "Not Found": "Category not found" });
+  if (err.status) {
+    response.status(err.status).send(err.msg);
   } else {
     next(err);
   }
