@@ -2,6 +2,7 @@ const db = require("../db/connection");
 const seed = require("../db/seeds/seedData");
 const request = require("supertest");
 const app = require("../app");
+const endpointsInfo = require("../endpointsInfo");
 
 beforeEach(() => {
   return seed();
@@ -12,6 +13,13 @@ afterAll(() => {
 });
 
 describe("app", () => {
+  describe("GET/api", () => {
+    test("GET /api should return all available endpoints on the API", async () => {
+      const endpointList = await request(app).get("/api").expect(200);
+      expect(endpointList.body).toEqual(endpointsInfo);
+    });
+  });
+
   describe("GET /api/categories", () => {
     test("should respond with a status of 200 ", async () => {
       await request(app).get("/api/categories").expect(200);

@@ -1,3 +1,4 @@
+const { getApiInfo } = require("./controller");
 const express = require("express");
 const app = express();
 
@@ -8,6 +9,7 @@ const categoriesRouter = require("./routes/categoriesRoutes");
 const recipesRouter = require("./routes/recipesRoutes");
 const recipeRouter = require("./routes/recipeRoutes");
 
+app.get("/api", getApiInfo);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/recipe", recipeRouter);
