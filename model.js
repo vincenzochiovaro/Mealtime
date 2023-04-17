@@ -16,10 +16,23 @@ const displayRecipesByCategory = async (category) => {
   try {
     return await db.query(`SELECT * FROM ${category}Meals;`);
   } catch (err) {
+    let isCategory = true;
+    const categoryList = await db.query(`SELECT * FROM categories;`);
+    categoryList.rows.forEach((eachCategoryInDatabase) => {
+      if (eachCategoryInDatabase.category_name.includes(category) === false) {
+        isCategory = false;
+      }
+    });
+    if (!isCategory) {
+      return Promise.reject({
+        status: 404,
+        code: err.code,
+        msg: "Category not found",
+      });
+    }
     return Promise.reject({
-      status: 404,
       code: err.code,
-      msg: "Error occurred while fetching recipeMeals",
+      msg: `Error occurred while fetching ${category}Meals`,
     });
   }
 };
