@@ -1,9 +1,18 @@
+const endpointsInfo = require("./endpointsInfo");
 const {
   displayCategories,
   displayRecipesByCategory,
   displayRandomRecipe,
   insertRecipe,
 } = require("./model");
+
+const getApiInfo = async (request, response, next) => {
+  try {
+    response.status(200).send(endpointsInfo);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getCategories = async (request, response, next) => {
   try {
@@ -59,4 +68,5 @@ module.exports = {
   getRecipesByCategory,
   getRandomRecipe,
   postRecipe,
+  getApiInfo,
 };
