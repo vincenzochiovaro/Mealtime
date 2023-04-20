@@ -107,6 +107,25 @@ const createCategoriesTable = async () => {
   }
 };
 
+const createSessionTable = async () => {
+  try {
+    await db.query(`DROP TABLE IF EXISTS session`);
+    await db.query(`
+    CREATE TABLE session (
+      sid varchar NOT NULL COLLATE "default",
+      sess json NOT NULL,
+      expire timestamp(6) NOT NULL
+    )
+    WITH (OIDS=FALSE);
+    
+    ALTER TABLE session ADD CONSTRAINT session_pkey PRIMARY KEY (sid) NOT DEFERRABLE INITIALLY IMMEDIATE;
+    
+    CREATE INDEX idx_session_expire ON session (expire);
+    `);
+  } catch (err) {
+    console.error("Error inserting data into Session table");
+  }
+};
 const insertChickenMealsData = async () => {
   try {
     const chickenMealData = await requestChickenMeals();
@@ -234,6 +253,7 @@ const seed = async () => {
     await createBeefMealsTable();
     await createLambMealsTable();
     await createCategoriesTable();
+    await createSessionTable();
     await insertChickenMealsData();
     await insertPorkMealsData();
     await insertBeefMealsData();

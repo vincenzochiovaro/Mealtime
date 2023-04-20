@@ -1,46 +1,49 @@
-const { getApiInfo } = require("./controller");
 const express = require("express");
+const db = require("./db/connection");
+const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
+const { getApiInfo } = require("./controller");
+const {
+  handleCustomErrors,
+  handlePSQLErrors,
+  handleInternalErrors,
+} = require("./errorHandlers");
 const app = express();
+
+const sessionStore = new pgSession({
+  postgresConnection: db,
+  collection: "sessions",
+});
+
+app.use(
+  session({
+    secret: "some secret",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
 
 app.use(express.json());
 
-//routes
+//ROUTES
 const categoriesRouter = require("./routes/categoriesRoutes");
 const recipesRouter = require("./routes/recipesRoutes");
 const recipeRouter = require("./routes/recipeRoutes");
+const testjwtRouter = require("./routes/testjwtRoutes");
 
 app.get("/api", getApiInfo);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/recipe", recipeRouter);
+app.use("/", testjwtRouter);
 
-//CUSTOM ERROR HANDLER
-app.use((err, request, response, next) => {
-  if (err.status) {
-    response.status(err.status).send(err.msg);
-  } else {
-    next(err);
-  }
-});
-
-// PSQL ERROR HANDLER
-app.use((err, request, response, next) => {
-  if (err.code === "22P02" || err.code === "42601") {
-    response.status(400).send(err.msg);
-  } else if (err.code === "23502") {
-    response
-      .status(400)
-      .send(
-        "One or more required property fields are missing or incorrect, make sure to have each property followed from the correct value"
-      );
-  } else {
-    next(err);
-  }
-});
-
-// INTERNAL SERVER ERROR
-app.use((err, request, response, next) => {
-  response.status(500).send(err.msg);
-});
+// CUSTOM ERROR HANDLERS
+app.use(handleCustomErrors);
+app.use(handlePSQLErrors);
+app.use(handleInternalErrors);
 
 module.exports = app;
