@@ -2,13 +2,22 @@ const express = require("express");
 const db = require("./db/connection");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
+const passport = require("passport");
+const crypto = require("crypto");
 const { getApiInfo } = require("./controller");
+const app = express();
+
+//ERROR HANDLERS
 const {
   handleCustomErrors,
   handlePSQLErrors,
   handleInternalErrors,
 } = require("./errorHandlers");
-const app = express();
+//ROUTES
+const categoriesRouter = require("./routes/categoriesRoutes");
+const recipesRouter = require("./routes/recipesRoutes");
+const recipeRouter = require("./routes/recipeRoutes");
+const testjwtRouter = require("./routes/testjwtRoutes");
 
 const sessionStore = new pgSession({
   postgresConnection: db,
@@ -17,7 +26,7 @@ const sessionStore = new pgSession({
 
 app.use(
   session({
-    secret: "some secret",
+    secret: "some secret", // to create the process.env.SECRET
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
@@ -29,17 +38,17 @@ app.use(
 
 app.use(express.json());
 
-//ROUTES
-const categoriesRouter = require("./routes/categoriesRoutes");
-const recipesRouter = require("./routes/recipesRoutes");
-const recipeRouter = require("./routes/recipeRoutes");
-const testjwtRouter = require("./routes/testjwtRoutes");
+//Access to passport.js module
+require("./passport");
+app.use(passport.initialize());
+app.use(passport.session());
 
+//Endpoints
 app.get("/api", getApiInfo);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/recipe", recipeRouter);
-app.use("/", testjwtRouter);
+app.use("/test", testjwtRouter);
 
 // CUSTOM ERROR HANDLERS
 app.use(handleCustomErrors);
