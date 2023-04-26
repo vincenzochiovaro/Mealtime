@@ -1,8 +1,15 @@
 const { genPassword } = require("../utilsFunctions/passwordValidation");
 const db = require("../db/connection");
+const passport = require("passport");
 const testjwtRouter = require("express").Router();
 
-testjwtRouter.post("/login", (req, res) => {});
+testjwtRouter.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/fail",
+    successRedirect: "/api",
+  })
+);
 
 testjwtRouter.post("/register", async (req, res, next) => {
   const saltHash = genPassword(req.body.pw);
