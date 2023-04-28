@@ -26,11 +26,11 @@ jwtRouter.post("/login", (req, res, next) => {
 });
 
 jwtRouter.post("/register", async (req, res, next) => {
-  const saltHash = genPassword(req.body.pw);
+  const saltHash = genPassword(req.body.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
 
-  const username = req.body.uname;
+  const username = req.body.username;
 
   try {
     const result = await db.query(

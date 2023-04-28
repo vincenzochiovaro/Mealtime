@@ -3,7 +3,6 @@ const db = require("./db/connection");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
-const crypto = require("crypto");
 const { getApiInfo } = require("./controller");
 const app = express();
 

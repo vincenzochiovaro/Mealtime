@@ -20,5 +20,17 @@ const endpointsInfo = {
       "Inserts a new recipe into the database. Please note that a maximum of 3 posts per day is allowed. Make sure to include a title, a valid category, instructions, image URL, YouTube link (if available), and ingredients with measurements.",
     url: "/api/recipe",
   },
+
+  register: {
+    method: "POST",
+    description:
+      "Register a new user account, must have username and password property",
+    url: "/auth/register",
+  },
+  login: {
+    method: "POST",
+    description: "Logs in an existing user ",
+    url: "/auth/login",
+  },
 };
 module.exports = endpointsInfo;

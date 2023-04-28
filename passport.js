@@ -4,8 +4,8 @@ const { validPassword } = require("./utilsFunctions/passwordValidation");
 const db = require("./db/connection");
 
 const customFields = {
-  usernameField: "uname",
-  passwordField: "pw",
+  usernameField: "username",
+  passwordField: "password",
 };
 
 const verifyCallback = async (username, password, done) => {
