@@ -17,7 +17,7 @@ const {
 const categoriesRouter = require("./routes/categoriesRoutes");
 const recipesRouter = require("./routes/recipesRoutes");
 const recipeRouter = require("./routes/recipeRoutes");
-const testjwtRouter = require("./routes/testjwtRoutes");
+const jwtRouter = require("./routes/jwtRoutes");
 
 const sessionStore = new pgSession({
   postgresConnection: db,
@@ -48,7 +48,7 @@ app.get("/api", getApiInfo);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/recipe", recipeRouter);
-app.use("/test", testjwtRouter);
+app.use("/auth", jwtRouter);
 
 // CUSTOM ERROR HANDLERS
 app.use(handleCustomErrors);

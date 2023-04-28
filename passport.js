@@ -13,11 +13,16 @@ const verifyCallback = async (username, password, done) => {
     const result = await db.query("SELECT * FROM users WHERE username = $1", [
       username,
     ]);
+
     if (!result.rows.length) {
       return done(null, false, { message: "Incorrect username." });
     }
     const user = result.rows[0];
-    if (!validPassword(password, user.password, user.salt)) {
+    console.log(user);
+    const isValidPassword = await validPassword(password, user.hash, user.salt);
+
+    console.log(isValidPassword);
+    if (!isValidPassword) {
       return done(null, false, { message: "Incorrect password." });
     }
     return done(null, user);

@@ -1,17 +1,31 @@
 const { genPassword } = require("../utilsFunctions/passwordValidation");
 const db = require("../db/connection");
 const passport = require("passport");
-const testjwtRouter = require("express").Router();
+const jwtRouter = require("express").Router();
 
-testjwtRouter.post(
-  "/login",
-  passport.authenticate("local", {
-    failureRedirect: "/fail",
-    successRedirect: "/api",
-  })
-);
+jwtRouter.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
 
-testjwtRouter.post("/register", async (req, res, next) => {
+    if (!user) {
+      return res.status(401).json({ message: info.message });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+
+      return res
+        .status(200)
+        .json({ message: `${user.username} Logged in successfully` });
+    });
+  })(req, res, next);
+});
+
+jwtRouter.post("/register", async (req, res, next) => {
   const saltHash = genPassword(req.body.pw);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
@@ -32,4 +46,4 @@ testjwtRouter.post("/register", async (req, res, next) => {
   }
 });
 
-module.exports = testjwtRouter;
+module.exports = jwtRouter;
