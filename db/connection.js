@@ -1,17 +1,13 @@
 const { Client } = require("pg");
 
 const client = new Client({
-  database: "mealdatabase",
-});
-
-require("dotenv").config({
-  path: `${__dirname}/../.env-mealconnection`,
+  connectionString: process.env.DATABASE_URL,
 });
 
 client
   .connect()
   .then(() => {
-    console.log(`connected to ${process.env.PGDATABASE}!`);
+    console.log(`connected to database!`);
     const query = `
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,

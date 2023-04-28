@@ -5,6 +5,7 @@ const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
 const { getApiInfo } = require("./controller");
 const app = express();
+require("dotenv").config({ path: ".env-secret" });
 
 //ERROR HANDLERS
 const {
@@ -25,7 +26,7 @@ const sessionStore = new pgSession({
 
 app.use(
   session({
-    secret: "some secret", // to create the process.env.SECRET
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
