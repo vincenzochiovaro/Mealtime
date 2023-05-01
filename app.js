@@ -5,6 +5,7 @@ const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
 const { getApiInfo } = require("./controller");
 const app = express();
+const cors = require("cors");
 require("dotenv").config({ path: ".env-secret" });
 
 //ERROR HANDLERS
@@ -58,4 +59,7 @@ app.use(handleInternalErrors);
 
 //seedDB
 seed();
+
+//allow cross origin resource sharing
+app.use(cors());
 module.exports = app;
