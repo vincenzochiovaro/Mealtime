@@ -28,7 +28,7 @@ const sessionStore = new pgSession({
 
 app.use(
   session({
-    secret: "some secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
