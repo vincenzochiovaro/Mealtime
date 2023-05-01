@@ -13,7 +13,7 @@ This is a simplified version of the MealDB API, designed to help beginners learn
   RATE_LIMIT_MAX=3
   RATE_LIMIT_MESSAGE=Too many requests, please try again tomorrow
 - Run the tests: npm test
-- To start the server, type node server.js in your terminal. Alternatively, you can install nodemon and run nodemon server.js.
+- To start the server, type npm start in your terminal. Alternatively, you can install nodemon and run nodemon server.js.
 - Open your preferred API client, such as Insomnia, and interact with the available endpoints. Please note that there is a limit of three POST requests per day.
 
 - Example usage: To retrieve a random recipe from the database, send a GET request to http://localhost:8080/recipe/random in Insomnia.
