@@ -18,6 +18,7 @@ const categoriesRouter = require("./routes/categoriesRoutes");
 const recipesRouter = require("./routes/recipesRoutes");
 const recipeRouter = require("./routes/recipeRoutes");
 const jwtRouter = require("./routes/jwtRoutes");
+const seed = require("./db/seeds/seedData");
 
 const sessionStore = new pgSession({
   postgresConnection: db,
@@ -55,4 +56,6 @@ app.use(handleCustomErrors);
 app.use(handlePSQLErrors);
 app.use(handleInternalErrors);
 
+//seedDB
+seed();
 module.exports = app;
