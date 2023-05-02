@@ -14,6 +14,7 @@ const {
   handlePSQLErrors,
   handleInternalErrors,
 } = require("./errorHandlers");
+
 //ROUTES
 const categoriesRouter = require("./routes/categoriesRoutes");
 const recipesRouter = require("./routes/recipesRoutes");
@@ -28,14 +29,13 @@ const sessionStore = new pgSession({
 
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: process.env.SECR,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
-    secret: process.env.SECRET,
   })
 );
 
