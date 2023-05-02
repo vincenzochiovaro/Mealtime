@@ -7,7 +7,7 @@ This is a simplified version of the MealDB API, designed to help beginners learn
 - Clone the repository
 - Install dependencies: npm install
 - Create a .env-mealconnection file with the following content: PGDATABASE=mealdatabase
-- Create a .env-secret file with your secret key
+- Create a .env with SECRET=your secret key
 - Create a .env-rateLimiter file with the following content:
   RATE_LIMIT_WINDOW_MS=86400000
   RATE_LIMIT_MAX=3

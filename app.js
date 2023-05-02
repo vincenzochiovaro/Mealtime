@@ -6,7 +6,7 @@ const passport = require("passport");
 const { getApiInfo } = require("./controller");
 const app = express();
 const cors = require("cors");
-require("dotenv").config({ path: ".env-secret" });
+require("dotenv").config();
 
 //ERROR HANDLERS
 const {
