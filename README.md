@@ -2,7 +2,16 @@
 
 This is a simplified version of the MealDB API, designed to help beginners learn how to interact with APIs and create basic websites using programming languages. The goal of this project is to simplify the MealDB API response to include only the necessary information, making it easier for beginners to navigate and practice with.
 
+# Hosted Version
+
+- You can find a hosted version of this project at https://mealtime-dkgl.onrender.com/api
+
 # Getting Started
+
+1. Install an HTTP client, such as Insomnia or Postman, if you don't have one installed already.
+2. Send a GET request to https://mealtime-dkgl.onrender.com/api to retrieve an overview of the API structure
+
+If you want to run Mealtime API locally, follow these steps:
 
 - Clone the repository
 - Install dependencies: npm install
@@ -13,7 +22,7 @@ This is a simplified version of the MealDB API, designed to help beginners learn
   RATE_LIMIT_MAX=3
   RATE_LIMIT_MESSAGE=Too many requests, please try again tomorrow
 - Run the tests: npm test
-- To start the server, type npm start in your terminal. Alternatively, you can install nodemon and run nodemon server.js.
+- Start the server: npm start or nodemon server.js if you have nodemon installed.
 - Open your preferred API client, such as Insomnia, and interact with the available endpoints. Please note that there is a limit of three POST requests per day.
 
 - Example usage: To retrieve a random recipe from the database, send a GET request to http://localhost:8080/recipe/random in Insomnia.
