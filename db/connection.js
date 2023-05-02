@@ -25,4 +25,21 @@ client
     console.log("connection error:", err);
   });
 
+// handle signals to close the database connection
+process.on("SIGINT", () => {
+  console.log("closing database connection...");
+  client.end(() => {
+    console.log("database connection closed");
+    process.exit();
+  });
+});
+
+process.on("SIGTERM", () => {
+  console.log("closing database connection...");
+  client.end(() => {
+    console.log("database connection closed");
+    process.exit();
+  });
+});
+
 module.exports = client;
