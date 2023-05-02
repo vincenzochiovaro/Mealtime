@@ -29,7 +29,7 @@ const sessionStore = new pgSession({
 
 app.use(
   session({
-    secret: process.env.SECR,
+    secret: "some secret", // to replace with an environment variable
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
