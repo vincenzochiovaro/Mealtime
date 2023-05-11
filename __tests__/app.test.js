@@ -20,6 +20,25 @@ describe("app", () => {
     });
   });
 
+  describe("Get /api/recipe/:recipeName", () => {
+    test("should respond with a status of 200", async () => {
+      await request(app).get("/api/recipe/Minced Beef Pie").expect(200);
+    });
+    test("should respond with an array that contains recipe object details as idMeal,strMeal,strArea etc. ", async () => {
+      const response = await request(app).get("/api/recipe/Minced Beef Pie");
+      expect(Array.isArray(response.body)).toBe(true);
+      response.body.forEach((recipeDetails) => {
+        expect(recipeDetails).toHaveProperty("idMeal", expect.any(String));
+        expect(recipeDetails).toHaveProperty("strMeal", expect.any(String));
+        expect(recipeDetails).toHaveProperty("strCategory", expect.any(String));
+      });
+    });
+    describe("Get /api/recipe/:recipeName Error handling test", () => {
+      test("should return status 404 when given recipeName doesn't exists ", () => {
+        return request(app).get("/api/recipe/invalid").expect(404);
+      });
+    });
+  });
   describe("GET /api/categories", () => {
     test("should respond with a status of 200 ", async () => {
       await request(app).get("/api/categories").expect(200);
