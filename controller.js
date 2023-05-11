@@ -5,6 +5,7 @@ const {
   displayRandomRecipe,
   insertRecipe,
 } = require("./model");
+const { requestRecipeByRecipeName } = require("./apiRequests");
 
 const getApiInfo = async (request, response, next) => {
   try {
@@ -42,6 +43,16 @@ const getRandomRecipe = async (request, response, next) => {
   }
 };
 
+const getRecipeByRecipeName = async (request, response, next) => {
+  try {
+    const { recipeName } = request.params;
+    const recipeResponse = await requestRecipeByRecipeName(recipeName);
+    response.status(200).send(recipeResponse);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const postRecipe = async (request, response, next) => {
   try {
     const { title, category, instructions, image, youtube, ingredients } =
@@ -69,4 +80,5 @@ module.exports = {
   getRandomRecipe,
   postRecipe,
   getApiInfo,
+  getRecipeByRecipeName,
 };

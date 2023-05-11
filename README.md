@@ -25,7 +25,7 @@ If you want to run Mealtime API locally, follow these steps:
 - Start the server: npm start or nodemon server.js if you have nodemon installed.
 - Open your preferred API client, such as Insomnia, and interact with the available endpoints. Please note that there is a limit of three POST requests per day.
 
-- Example usage: To retrieve a random recipe from the database, send a GET request to http://localhost:8080/recipe/random in Insomnia.
+- Example usage: To retrieve a random recipe from the database, send a GET request to http://localhost:8080/api/recipe/random in Insomnia.
 
 # Endpoints
 
@@ -46,6 +46,10 @@ The following endpoints are available:
 - GET /api/recipe/random
 
   Retrieves a random recipe from a randomly selected category.
+
+- GET /api/recipe/:recipeName
+
+  Retrieve a recipe by recipe name
 
 - POST /auth/register
 

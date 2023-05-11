@@ -14,6 +14,12 @@ const endpointsInfo = {
     description: "Retrieves a random recipe from a randomly selected category",
     url: "/api/recipe/random",
   },
+  recipeByName: {
+    method: "GET",
+    description: "Retrieve a recipe by recipe name",
+    url: "/api/recipe/:recipeName",
+  },
+
   insertRecipe: {
     method: "POST",
     description:

@@ -133,9 +133,28 @@ const requestLambMeals = async () => {
   }
 };
 
+const requestRecipeByRecipeName = async (recipeName) => {
+  try {
+    const response = await axios.get(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${recipeName}`
+    );
+
+    if (!response.data.meals) {
+      return Promise.reject({
+        code: 404,
+        msg: `recipeName does not exists`,
+      });
+    }
+    return response.data.meals;
+  } catch (err) {
+    console.log(err, "error in requestRecipeByRecipeName");
+  }
+};
+
 module.exports = {
   requestChickenMeals,
   requestPorkMeals,
   requestBeefMeals,
   requestLambMeals,
+  requestRecipeByRecipeName,
 };

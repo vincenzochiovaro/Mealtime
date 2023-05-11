@@ -1,6 +1,8 @@
 function handleCustomErrors(err, req, res, next) {
   if (err.status) {
     res.status(err.status).send(err.msg);
+  } else if (err.code === 404) {
+    res.status(404).send(err.msg);
   } else {
     next(err);
   }
