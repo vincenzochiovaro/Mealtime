@@ -41,6 +41,9 @@ app.use(
 
 app.use(express.json());
 
+//allow cross origin resource sharing
+app.use(cors());
+
 //Access to passport.js module
 require("./passport");
 app.use(passport.initialize());
@@ -61,6 +64,4 @@ app.use(handleInternalErrors);
 //seedDB
 seed();
 
-//allow cross origin resource sharing
-app.use(cors());
 module.exports = app;
