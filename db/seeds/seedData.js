@@ -40,7 +40,8 @@ const createPorkMealsTable = async () => {
                 instructions TEXT NOT NULL,
                 image VARCHAR(255) NOT NULL,
                 youtube VARCHAR(255),
-                ingredients JSONB NOT NULL
+                ingredients JSONB NOT NULL,
+                voteCount INT NOT NULL
               )
             `);
     console.log("porkMeals table created successfully.");
@@ -159,8 +160,8 @@ const insertPorkMealsData = async () => {
     for (const meal of porkMealData) {
       const query = {
         text: `
-                INSERT INTO porkMeals (title, category, instructions, image, youtube, ingredients)
-                VALUES ($1, $2, $3, $4, $5, $6::json)
+                INSERT INTO porkMeals (title, category, instructions, image, youtube, ingredients, voteCount)
+                VALUES ($1, $2, $3, $4, $5, $6::json, $7)
               `,
         values: [
           meal.title,
@@ -169,9 +170,9 @@ const insertPorkMealsData = async () => {
           meal.image,
           meal.youtube || null,
           JSON.stringify(meal.ingredients),
+          meal.voteCount,
         ],
       };
-
       await db.query(query);
     }
     console.log("inserted data into pork table successfully");

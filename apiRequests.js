@@ -58,6 +58,7 @@ const requestPorkMeals = async () => {
         image: meal.strMealThumb,
         youtube: meal.strYoutube,
         ingredients: ingredientsList,
+        voteCount: 0,
       };
       return porkRecipeObj;
     });
