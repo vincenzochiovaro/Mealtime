@@ -1,6 +1,6 @@
 # Mealtime
 
-This is a simplified version of the MealDB API, designed to help beginners learn how to interact with APIs and create basic websites using programming languages. The goal of this project is to simplify the MealDB API response to include only the necessary information, making it easier for beginners to navigate and practice with.
+Mealtime is a concise and user-friendly RESTful API designed for seamless API interaction and website development. It enables you to access a vast collection of hundreds of recipes, empowering you to create engaging applications, provide recipe suggestions, generate random recipes, and explore culinary inspiration effortlessly.
 
 # Hosted Version
 
