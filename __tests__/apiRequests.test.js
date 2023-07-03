@@ -16,6 +16,7 @@ describe("requestChickenMeals", () => {
     expect(chickenMeals[0]).toHaveProperty("image");
     expect(chickenMeals[0]).toHaveProperty("youtube");
     expect(chickenMeals[0]).toHaveProperty("ingredients");
+    expect(chickenMeals[0]).toHaveProperty("voteCount");
   });
   test("should return chicken meals with category 'Chicken'", async () => {
     const chickenMeals = await requestChickenMeals();
