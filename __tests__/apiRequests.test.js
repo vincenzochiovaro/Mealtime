@@ -79,6 +79,7 @@ describe("requestLambMeals", () => {
     expect(lambMeals[0]).toHaveProperty("image");
     expect(lambMeals[0]).toHaveProperty("youtube");
     expect(lambMeals[0]).toHaveProperty("ingredients");
+    expect(lambMeals[0]).toHaveProperty("voteCount");
   });
   // test("should return Lamb meals with category 'Lamb'===> reported small issue to the MealDB creator for wrong category name on the lamb meals category, ", async () => {
   //   const LambMeals = await requestLambMeals();

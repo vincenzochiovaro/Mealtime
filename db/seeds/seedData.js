@@ -85,7 +85,8 @@ const createLambMealsTable = async () => {
                     instructions TEXT NOT NULL,
                     image VARCHAR(255) NOT NULL,
                     youtube VARCHAR(255),
-                    ingredients JSONB NOT NULL
+                    ingredients JSONB NOT NULL,
+                    voteCount INT NOT NULL
                   )
                 `);
     console.log("lambMeals table created successfully.");
@@ -218,8 +219,8 @@ const insertLambMealsData = async () => {
     for (const meal of lambMealData) {
       const query = {
         text: `
-                    INSERT INTO lambMeals (title, category, instructions, image, youtube, ingredients)
-                    VALUES ($1, $2, $3, $4, $5, $6::json)
+                    INSERT INTO lambMeals (title, category, instructions, image, youtube, ingredients, voteCount)
+                    VALUES ($1, $2, $3, $4, $5, $6::json, $7)
                   `,
         values: [
           meal.title,
@@ -228,6 +229,7 @@ const insertLambMealsData = async () => {
           meal.image,
           meal.youtube || null,
           JSON.stringify(meal.ingredients),
+          meal.voteCount,
         ],
       };
 
