@@ -57,6 +57,7 @@ describe("requestBeefMeals", () => {
     expect(beefMeals[0]).toHaveProperty("image");
     expect(beefMeals[0]).toHaveProperty("youtube");
     expect(beefMeals[0]).toHaveProperty("ingredients");
+    expect(beefMeals[0]).toHaveProperty("voteCount");
   });
   test("should return Beef meals with category 'Beef'", async () => {
     const BeefMeals = await requestBeefMeals();
