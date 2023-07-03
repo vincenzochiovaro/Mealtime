@@ -62,7 +62,8 @@ const createBeefMealsTable = async () => {
                   instructions TEXT NOT NULL,
                   image VARCHAR(255) NOT NULL,
                   youtube VARCHAR(255),
-                  ingredients JSONB NOT NULL
+                  ingredients JSONB NOT NULL,
+                  voteCount INT NOT NULL
                 )
               `);
     console.log("beefMeals table created successfully.");
@@ -187,8 +188,8 @@ const insertBeefMealsData = async () => {
     for (const meal of beefMealData) {
       const query = {
         text: `
-                  INSERT INTO beefMeals (title, category, instructions, image, youtube, ingredients)
-                  VALUES ($1, $2, $3, $4, $5, $6::json)
+                  INSERT INTO beefMeals (title, category, instructions, image, youtube, ingredients, voteCount)
+                  VALUES ($1, $2, $3, $4, $5, $6::json, $7)
                 `,
         values: [
           meal.title,
@@ -197,6 +198,7 @@ const insertBeefMealsData = async () => {
           meal.image,
           meal.youtube || null,
           JSON.stringify(meal.ingredients),
+          meal.voteCount,
         ],
       };
 
