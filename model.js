@@ -89,9 +89,31 @@ const insertRecipe = async (
   }
 };
 
+const updateVoteCount = async (recipeName, category) => {
+  try {
+    updatedRecipeCount = await db.query(
+      `UPDATE ${category}Meals SET voteCount = voteCount + 1 WHERE title = '${recipeName}' RETURNING *`
+    );
+    if (!updatedRecipeCount.rows) {
+      return Promise.reject({
+        status: 404,
+        code: err.code,
+        msg: "couldn't find the recipe to update",
+      });
+    }
+    return updatedRecipeCount.rows;
+  } catch (error) {
+    return Promise.reject({
+      code: error.code,
+      msg: `Error occurred while update a recipe voteCount`,
+    });
+  }
+};
+
 module.exports = {
   displayCategories,
   displayRecipesByCategory,
   displayRandomRecipe,
   insertRecipe,
+  updateVoteCount,
 };

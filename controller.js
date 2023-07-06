@@ -4,6 +4,7 @@ const {
   displayRecipesByCategory,
   displayRandomRecipe,
   insertRecipe,
+  updateVoteCount,
 } = require("./model");
 const { requestRecipeByRecipeName } = require("./apiRequests");
 
@@ -73,6 +74,18 @@ const postRecipe = async (request, response, next) => {
   }
 };
 
+const patchVoteCount = async (request, response, next) => {
+  try {
+    const { recipeName } = request.params;
+    const { category } = request.params;
+    const updatedCount = await updateVoteCount(recipeName, category);
+    response.status(200).send(updatedCount);
+  } catch (error) {
+    console.log("error in patchVoteCount controller");
+    next(error);
+  }
+};
+
 module.exports = {
   getCategories,
   getRecipesByCategory,
@@ -81,4 +94,5 @@ module.exports = {
   postRecipe,
   getApiInfo,
   getRecipeByRecipeName,
+  patchVoteCount,
 };
