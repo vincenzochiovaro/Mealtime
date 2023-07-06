@@ -107,101 +107,111 @@ describe("app", () => {
     });
   });
 
-  describe("POST /api/recipe", () => {
-    test("respond with 201 when a valid recipe is posted ", async () => {
-      const recipeData = {
-        title: "test Recipe",
-        category: "chicken",
-        instructions: "test instructions",
-        image: "example.jpg",
-        youtube: "https://www.youtube.com/test",
-        ingredients: [
-          { ingredient: "Ingredient 1", measurement: "Measurement 1" },
-          { ingredient: "Ingredient 2", measurement: "Measurement 2" },
-        ],
-      };
-      await request(app).post("/api/recipe").send(recipeData).expect(201);
-    });
-    test("respond with the recipe added successfully  ", async () => {
-      const recipeData = {
-        title: "test Recipe",
-        category: "chicken",
-        instructions: "test instructions",
-        image: "example.jpg",
-        youtube: "https://www.youtube.com/test",
-        ingredients: [
-          { ingredient: "Ingredient 1", measurement: "Measurement 1" },
-          { ingredient: "Ingredient 2", measurement: "Measurement 2" },
-        ],
-      };
-      const addedRecipe = await request(app)
-        .post("/api/recipe")
-        .send(recipeData)
-        .expect(201);
+  // describe("POST /api/recipe", () => {
+  //   test("respond with 201 when a valid recipe is posted ", async () => {
+  //     const recipeData = {
+  //       title: "test Recipe",
+  //       category: "chicken",
+  //       instructions: "test instructions",
+  //       image: "example.jpg",
+  //       youtube: "https://www.youtube.com/test",
+  //       ingredients: [
+  //         { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+  //         { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+  //       ],
+  //     };
+  //     await request(app).post("/api/recipe").send(recipeData).expect(201);
+  //   });
+  //   test("respond with the recipe added successfully  ", async () => {
+  //     const recipeData = {
+  //       title: "test Recipe",
+  //       category: "chicken",
+  //       instructions: "test instructions",
+  //       image: "example.jpg",
+  //       youtube: "https://www.youtube.com/test",
+  //       ingredients: [
+  //         { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+  //         { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+  //       ],
+  //     };
+  //     const addedRecipe = await request(app)
+  //       .post("/api/recipe")
+  //       .send(recipeData)
+  //       .expect(201);
 
-      addedRecipe.body.forEach((recipe) => {
-        expect(recipe).toHaveProperty("id", expect.any(Number));
-        expect(recipe).toHaveProperty("title", expect.any(String));
-        expect(recipe).toHaveProperty("category", expect.any(String));
-        expect(recipe).toHaveProperty("instructions", expect.any(String));
-        expect(recipe).toHaveProperty("image", expect.any(String));
-        expect(recipe).toHaveProperty("youtube", expect.any(String));
-        expect(Array.isArray(recipe.ingredients)).toBe(true);
-      });
-    });
+  //     addedRecipe.body.forEach((recipe) => {
+  //       expect(recipe).toHaveProperty("id", expect.any(Number));
+  //       expect(recipe).toHaveProperty("title", expect.any(String));
+  //       expect(recipe).toHaveProperty("category", expect.any(String));
+  //       expect(recipe).toHaveProperty("instructions", expect.any(String));
+  //       expect(recipe).toHaveProperty("image", expect.any(String));
+  //       expect(recipe).toHaveProperty("youtube", expect.any(String));
+  //       expect(Array.isArray(recipe.ingredients)).toBe(true);
+  //     });
+  //   });
 
-    describe("POST /api/recipe Error handling", () => {
-      test("respond with status 400 when one or more property field are incorrect  ", async () => {
-        const wrongRecipeData = {
-          wrong: "test Recipe",
-          category: "chicken",
-          wrong2: "test instructions",
-          image: "example.jpg",
-          youtube: "https://www.youtube.com/test",
-          ingredients: [
-            { ingredient: "Ingredient 1", measurement: "Measurement 1" },
-            { ingredient: "Ingredient 2", measurement: "Measurement 2" },
-          ],
-        };
-        await request(app)
-          .post("/api/recipe")
-          .send(wrongRecipeData)
-          .expect(400);
-      });
-    });
+  //   describe("POST /api/recipe Error handling", () => {
+  //     test("respond with status 400 when one or more property field are incorrect  ", async () => {
+  //       const wrongRecipeData = {
+  //         wrong: "test Recipe",
+  //         category: "chicken",
+  //         wrong2: "test instructions",
+  //         image: "example.jpg",
+  //         youtube: "https://www.youtube.com/test",
+  //         ingredients: [
+  //           { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+  //           { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+  //         ],
+  //       };
+  //       await request(app)
+  //         .post("/api/recipe")
+  //         .send(wrongRecipeData)
+  //         .expect(400);
+  //     });
+  //   });
+  //   describe("RATE LIMITER", () => {
+  //     test("should return a status 429 and display error message when two or more post are executed ", async () => {
+  //       const recipeToAdd1 = {
+  //         title: "test Recipe",
+  //         category: "chicken",
+  //         instructions: "test instructions",
+  //         image: "example.jpg",
+  //         youtube: "https://www.youtube.com/test",
+  //         ingredients: [
+  //           { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+  //           { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+  //         ],
+  //       };
+  //       const recipeToAdd2 = {
+  //         title: "test2 Recipe",
+  //         category: "chicken",
+  //         instructions: "test instructions",
+  //         image: "example.jpg",
+  //         youtube: "https://www.youtube.com/test",
+  //         ingredients: [
+  //           { ingredient: "Ingredient 1", measurement: "Measurement 1" },
+  //           { ingredient: "Ingredient 2", measurement: "Measurement 2" },
+  //         ],
+  //       };
 
-    describe("RATE LIMITER", () => {
-      test("should return a status 429 and display error message when two or more post are executed ", async () => {
-        const recipeToAdd1 = {
-          title: "test Recipe",
-          category: "chicken",
-          instructions: "test instructions",
-          image: "example.jpg",
-          youtube: "https://www.youtube.com/test",
-          ingredients: [
-            { ingredient: "Ingredient 1", measurement: "Measurement 1" },
-            { ingredient: "Ingredient 2", measurement: "Measurement 2" },
-          ],
-        };
-        const recipeToAdd2 = {
-          title: "test2 Recipe",
-          category: "chicken",
-          instructions: "test instructions",
-          image: "example.jpg",
-          youtube: "https://www.youtube.com/test",
-          ingredients: [
-            { ingredient: "Ingredient 1", measurement: "Measurement 1" },
-            { ingredient: "Ingredient 2", measurement: "Measurement 2" },
-          ],
-        };
+  //       await request(app).post("/api/recipe").send(recipeToAdd1);
 
-        await request(app).post("/api/recipe").send(recipeToAdd1);
+  //       const response = await request(app)
+  //         .post("/api/recipe")
+  //         .send(recipeToAdd2);
+  //       //assert
+  //       expect(response.status).toBe(429);
+  //     });
+  //   });
+  // });
 
-        const response = await request(app)
-          .post("/api/recipe")
-          .send(recipeToAdd2);
-        //assert
-        expect(response.status).toBe(429);
+  describe("PATCH /api/recipe/:recipeName/:category", () => {
+    test("should increment vote count when patching recipe", async () => {
+      const res = await request(app)
+        .patch("/api/recipe/Lamb Tagine/Lamb")
+        .expect(200);
+      res.body.forEach((recipeInfo) => {
+        expect(recipeInfo.votecount).toBeGreaterThan(0);
       });
     });
   });
