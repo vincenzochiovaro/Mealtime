@@ -38,5 +38,10 @@ const endpointsInfo = {
     description: "Logs in an existing user ",
     url: "/auth/login",
   },
+  updateVoteCountRecipe: {
+    method: "PATCH",
+    description: "Update voteCount to a specific recipe ",
+    url: "/api/recipe/:recipeName/:category",
+  },
 };
 module.exports = endpointsInfo;
