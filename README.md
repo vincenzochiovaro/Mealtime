@@ -1,6 +1,6 @@
 # Mealtime
 
-Mealtime is a concise and user-friendly RESTful API designed for seamless API interaction and website development. It enables you to access a vast collection of hundreds of recipes, empowering you to create engaging applications, provide recipe suggestions, generate random recipes, and explore culinary inspiration effortlessly.
+I brought Mealtime to life, employing a robust monolithic structure alongside a reliable RESTful API. Utilizing Node.js, Express, and PostgreSQL, my primary objective was to simplify the workflow for frontend developers, enabling effortless access to a diverse array of recipes tailored for their projects through CRUD operations.
 
 # Hosted Version
 
@@ -12,7 +12,7 @@ This project utilizes Jest for unit testing the API endpoints. To run the tests 
 
 1. Make sure you have all the dependencies installed by running the following command: npm install
 2. Execute the following command to run the tests: npm test
-3. The tests are located in the **tests** directory.
+3. The tests are located in the **__tests__** directory.
 
 # Error Handling
 
